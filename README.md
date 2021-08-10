@@ -8,4 +8,4 @@ The project will use an U-net segmentation architecture (https://arxiv.org/abs/1
 The idea is to start first with simple sandstone images to segment the principal minerals and porosity as a proof of concept and then continue to add segmentation of more sedimentary features to the model.
 
 
-![petro image1](images/1-8-164SCAL porosidad.PNG)
+![petro image1](images/image1.png)
