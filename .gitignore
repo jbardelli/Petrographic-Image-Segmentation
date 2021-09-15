@@ -1,0 +1,16 @@
+# Exclude the following paths that are not needed to run the program
+# and some are too bog to upload to Gihub
+.idea
+venv
+training
+
+
+# Files in root directory 
+Statistics.xlsx
+Commands.docx
+tube.ico
+Update_Config_for_Transfer_Learning.py
+Capture_Images.py
+Create_label_map.py
+Detect_from_File.py
+Detect_from_WebCam.py
