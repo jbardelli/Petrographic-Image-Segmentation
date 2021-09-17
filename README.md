@@ -15,3 +15,7 @@ First is the parallel nicols image second is the crossed nicols and last is the 
 ![sanity2](images/sanity_check_2.jpg)
 
 ![sanity3](images/sanity_check_3.jpg)
+
+Example of initial test with predictions with a poorly trained model.
+
+![predict1](images/predict1.png)
