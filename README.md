@@ -18,4 +18,4 @@ First is the parallel nicols image second is the crossed nicols and last is the 
 
 Example of initial test with predictions with a poorly trained model.
 
-![predict1](images/predict1.png)
+![predict1](images/prediction1.png)
