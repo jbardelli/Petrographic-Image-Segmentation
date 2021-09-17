@@ -9,9 +9,9 @@ from petrographic_image_utils import rgb_to_2d_label
 scaler = MinMaxScaler()
 patch_size = 400
 n_classes = 5  # Number of classes for segmentation
-image_p_path = 'petrographic_image_dataset/paralelos/7a_paralelos.jpg'
-image_c_path = 'petrographic_image_dataset/cruzados/7a_cruzados.jpg'
-mask_path = 'petrographic_image_dataset/masks/7a_mascara.ome.tiff'
+image_p_path = 'petrographic_image_dataset/paralelos/9a_paralelos.jpg'
+image_c_path = 'petrographic_image_dataset/cruzados/9a_cruzados.jpg'
+mask_path = 'petrographic_image_dataset/masks/9a_mascara.ome.tiff'
 
 image_p = cv2.imread(image_p_path, 1)           # Read parallel nicols image as BGR
 image_c = cv2.imread(image_c_path, 1)           # Read crossed nicols image as BGR
@@ -43,12 +43,15 @@ final_prediction = np.argmax(predictions_smooth, axis=2)
 #Plot and save results
 plt.figure(figsize=(12, 12))
 plt.subplot(221)
-plt.title('Testing Image')
+plt.title('Image Plain Polarized Light')
 plt.imshow(image_p)
 plt.subplot(222)
+plt.title('Image Cross Polarized Light')
+plt.imshow(image_c)
+plt.subplot(223)
 plt.title('Testing Label')
 plt.imshow(mask)
-plt.subplot(223)
+plt.subplot(224)
 plt.title('Prediction')
 plt.imshow(final_prediction)
 plt.show()
