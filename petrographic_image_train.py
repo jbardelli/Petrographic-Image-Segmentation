@@ -13,10 +13,8 @@ from tensorflow.keras.utils import to_categorical
 from simple_multi_unet_model import multi_unet_model, jacard_coef
 
 scaler = MinMaxScaler()
-patch_size = 256
-SIZE_X = 256
-SIZE_Y = 256
-n_classes = 4  # Number of classes for segmentation
+patch_size = 400
+n_classes = 5  # Number of classes for segmentation
 root_directory = 'petrographic_image_dataset/'
 image_dataset = []
 
@@ -33,14 +31,11 @@ for path, subdirs, files in os.walk(root_directory):
                 image_p = cv2.imread(path + "/" + image_name, 1)        # Read parallel nicols image as BGR
                 image_c = cv2.imread(path_cruzados, 1)                  # Read crossed nicols image as BGR
 
-                # Crop images to to the nearest multiple of patch_size
-                image_p = image_crop(image_p, patch_size)
-                image_c = image_crop(image_c, patch_size)
-
                 # Extract patches from each image
                 print("Now patchifying image:", path + "/" + image_name)
-                patches_p = patchify(image_p, (patch_size, patch_size, 3), step=patch_size)  # Step=256 for 256 patches means no overlap
-                patches_c = patchify(image_c, (patch_size, patch_size, 3), step=patch_size)  # Step=256 for 256 patches means no overlap
+                patches_p = patchify(image_p, (patch_size, patch_size, 3), step=patch_size)
+                patches_c = patchify(image_c, (patch_size, patch_size, 3), step=patch_size)
+                # print('Patches shape: ', patches_c.shape)
 
                 for j in range(patches_p.shape[0]):
                     for k in range(patches_p.shape[1]):
@@ -60,10 +55,6 @@ for path, subdirs, files in os.walk(root_directory):
             if mask_name.endswith(".tiff"):  # Only read png images... (masks in this dataset)
                 mask = cv2.imread(path + "/" + mask_name, 1)  # Read each image as Grey (or color but remember to map each color to an integer)
                 mask = cv2.cvtColor(mask, cv2.COLOR_BGR2RGB)
-                SIZE_X = (mask.shape[1] // patch_size) * patch_size  # Nearest size divisible by our patch size
-                SIZE_Y = (mask.shape[0] // patch_size) * patch_size  # Nearest size divisible by our patch size
-
-                mask = image_crop(mask, patch_size)
 
                 # Extract patches from each image
                 print("Now patchifying mask:", path + "/" + mask_name)
@@ -118,6 +109,8 @@ total_loss = dice_loss + (1 * focal_loss)  #
 IMG_HEIGHT = X_train.shape[1]
 IMG_WIDTH = X_train.shape[2]
 IMG_CHANNELS = X_train.shape[3]
+print("Image (height, width): ", IMG_HEIGHT, ', ', IMG_WIDTH)
+print('Channels: ', IMG_CHANNELS)
 metrics = ['accuracy', jacard_coef]
 
 
@@ -137,20 +130,5 @@ history1 = model.fit(X_train, y_train,
                      validation_data=(X_test, y_test),
                      shuffle=False)
 
-# Minmaxscaler
-# With weights...[0.1666, 0.1666, 0.1666, 0.1666, 0.1666, 0.1666]   in Dice loss
-# With focal loss only, after 100 epochs val jacard is: 0.62  (Mean IoU: 0.6)
-# With dice loss only, after 100 epochs val jacard is: 0.74 (Reached 0.7 in 40 epochs)
-# With dice + 5 focal, after 100 epochs val jacard is: 0.711 (Mean IoU: 0.611)
-# With dice + 1 focal, after 100 epochs val jacard is: 0.75 (Mean IoU: 0.62)
-# Using categorical crossentropy as loss: 0.71
-
-# With calculated weights in Dice loss.
-# With dice loss only, after 100 epochs val jacard is: 0.672 (0.52 iou)
-
-
-# Standardscaler
-# Using categorical crossentropy as loss: 0.677
-
-model.save('models/satellite_standard_unet_100epochs_7May2021.hdf5')
+model.save('models/petrography_standard_unet_100epochs.hdf5')
 ############################################################
