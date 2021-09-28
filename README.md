@@ -13,13 +13,17 @@ The U-net semantic segmentation architecture (https://arxiv.org/abs/1505.04597) 
 
 <img src="images/u-net-architecture.png" width="450" height="300">
 
+The DeepLab model is based in the following paper (https://arxiv.org/abs/1706.05587), here I use the tensorflow implementation of DeepLab (available at https://github.com/tensorflow/models/tree/master/research/deeplab)
+
 The idea is to start first with simple sandstone images to segment the principal minerals and porosity as a proof of concept and then continue to add segmentation of more sedimentary features to the model.
 
 The following are examples of training images divided in 256x256 size.
-First is the parallel polarized light (PPL) image, second is the crossed polarized light (XPL) image and last is the annotated mask.
+First is the parallel polarized light (PPL) image, second is the crossed polarized light (XPL) image and last is the annotated mask. The two images as well as the mask have a pixel-to-pixel correspondence, and give more information as XPL shows other aspects of each mineral.
 <img src="images/sanity_check_1.jpg" width="800" height="300">
 <img src="images/sanity_check_2.jpg" width="810" height="300">
 <img src="images/sanity_check_3.jpg" width="810" height="300">
+
+In the U-net model I combine the two images (PPL and XPL) into a 6 channel image and adapted the input layer of the U-net model to accomodate to it. It is unclear yet if the Deeplab model can accept to images for the same rock section with different light.
 
 Example of initial test with predictions using U-net with a model trained with very few images.
 <img src="images/prediction1.png" width="550" height="400">
