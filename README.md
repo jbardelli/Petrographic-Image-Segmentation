@@ -25,6 +25,8 @@ First is the parallel polarized light (PPL) image, second is the crossed polariz
 
 In the U-net model I combine the two images (PPL and XPL) into a 6 channel image and adapted the input layer of the U-net model to accomodate to it. It is unclear yet if the Deeplab model can accept to images for the same rock section with different light.
 
-Example of initial test with predictions using U-net with a model trained with very few images.
+Example of initial test with predictions using U-net with a model trained with 6 images.
 <img src="images/prediction1.png" width="550" height="400">
+Example of initial test with predictions using U-net with a model trained with 20 images.
+<img src="images/prediction3.png" width="550" height="400">
 
