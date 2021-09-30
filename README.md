@@ -2,10 +2,12 @@
 Project is aimed at segmenting petrographic images taken from rock samples thin sections, in order to classify rock types.
 The inital objective is to classifiy 4 different minerals that allow the sandstone classification in the Folk chart.
 The classes are:
-  1) Feldspar
-  2) Lithic fragments
-  3) Plagioclase
-  4) Quartz
+
+  0) Background (Bkg)  
+  1) Feldspar (Fk)
+  2) Lithic fragments (Lf)
+  3) Plagioclase (Plg)
+  4) Quartz (Qz)
 
 The project will compare results using U-net and DeepLab V3 models.
 
@@ -25,8 +27,16 @@ First is the parallel polarized light (PPL) image, second is the crossed polariz
 
 In the U-net model I combine the two images (PPL and XPL) into a 6 channel image and adapted the input layer of the U-net model to accomodate to it. It is unclear yet if the Deeplab model can accept to images for the same rock section with different light.
 
-Example of initial test with predictions using U-net with a model trained with 6 images.
+Example of initial test with prediction using U-net with a model trained with 6 images.
 <img src="images/prediction1.png" width="550" height="400">
-Example of initial test with predictions using U-net with a model trained with 20 images.
+
+Example of prediction using U-net with a model trained with 20 images. At this point the model has problems to detect Feldspar (Fk) and Plagioclase (Plg), due to the class imbalance in the train dataset (there are fewer examples of these classes).
+With these 20 images the occurences per class are:
+
+* Class Reference: (Bkg, Fk, Lf, Plg, Qz)
+* Occurences per class: (12637139,  5556066, 12041060,  3008049,  5157686)
+* Total pixels:  38400000
+* Occurence percentages:  (32.9, 14.5, 31.4,  7.8, 13.4)
+
 <img src="images/prediction3.png" width="550" height="400">
 
